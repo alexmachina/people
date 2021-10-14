@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_mongoengine",
     "core.apps.CoreConfig",
 ]
 
@@ -71,7 +73,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "people.wsgi.application"
 
+db_name = "people-db"
+hostname = "localhost"
+username = ""
+pwd = ""
 
+mongoengine.connect(db=db_name, host=hostname, username=username, password=pwd, port="")
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

@@ -1,22 +1,20 @@
-from django.db import models
+from mongoengine import Document, fields
 
 
-class Person(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    first_name = models.CharField(max_length=100, blank=False)
-    last_name = models.CharField(max_length=100, blank=False)
-    email = models.EmailField(blank=False)
-    github = models.CharField(max_length=100, blank=False)
-    date_joined = models.DateField()
-    profile_pic = models.CharField(max_length=100, blank=True)
+class Person(Document):
+    created = fields.DateTimeField(auto_now_add=True)
+    last_modified = fields.DateTimeField(auto_now=True)
+    first_name = fields.StringField(max_length=100, blank=False)
+    last_name = fields.StringField(max_length=100, blank=False)
+    email = fields.EmailField(blank=False)
+    github = fields.StringField(max_length=100, blank=False)
+    date_joined = fields.DateField()
+    profile_pic = fields.StringField(max_length=100, blank=True)
 
 
-class Note(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    content = models.TextField()
-    person = models.ForeignKey(Person, on_delete=models.RESTRICT, related_name="notes")
-    facilitator = models.ForeignKey(
-        Person, on_delete=models.RESTRICT, related_name="facilitator_notes"
-    )
+class Note(Document):
+    created = fields.DateTimeField(auto_now_add=True)
+    last_modified = fields.DateTimeField(auto_now=True)
+    content = fields.StringField()
+    person = fields.ReferenceField(Person)
+    facilitator = fields.ReferenceField(Person)

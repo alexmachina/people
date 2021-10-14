@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework_mongoengine import viewsets
 
 from core.models import Person, Note
 from core.serializers import PersonSerializer

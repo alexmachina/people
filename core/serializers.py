@@ -1,11 +1,8 @@
-from rest_framework import serializers
+from rest_framework_mongoengine import serializers
 from core.models import Person, Note
 
 
-class PersonSerializer(serializers.ModelSerializer):
-    notes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    facilitator_notes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
+class PersonSerializer(serializers.DocumentSerializer):
     class Meta:
         model = Person
         fields = [
@@ -17,12 +14,10 @@ class PersonSerializer(serializers.ModelSerializer):
             "github",
             "date_joined",
             "profile_pic",
-            "notes",
-            "facilitator_notes",
         ]
 
 
-class NoteSerializer(serializers.ModelSerializer):
+class NoteSerializer(serializers.DocumentSerializer):
     class Meta:
         model = Note
         fields = ["created", "last_modified", "content", "person", "facilitator"]
